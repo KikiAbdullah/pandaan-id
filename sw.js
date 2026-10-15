@@ -1,10 +1,10 @@
 // Service worker pandaan.id — path relatif terhadap scope registrasi,
 // jadi bekerja di root custom domain maupun subpath GitHub Pages.
-const CACHE_NAME = 'pandaan-static-v4'
+const CACHE_NAME = 'pandaan-static-v5'
 const scope = self.registration.scope
 const shellPaths = [
   './', 'berita/', 'info-jalan/', 'direktori/', 'event/', 'offline.html',
-  'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png',
+  'manifest.webmanifest', 'assets/logo-pandaan-dark.webp', 'assets/logo-pandaan-white.webp', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png',
   'assets/css/pandaan.css', 'assets/js/pandaan.js',
   'assets/fonts/fraunces-latin-var.woff2', 'assets/fonts/schibsted-grotesk-latin-var.woff2',
 ]
