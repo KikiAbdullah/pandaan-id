@@ -678,7 +678,6 @@ h1, h2, h3, .page-title, .section-heading h2, .hero-copy h1, .cta-band h2,
 /* Nuansa koran: garis tegas di atas judul seksi, kartu tidak terlalu membulat */
 .section-heading { border-top: 2px solid var(--ink); padding-top: 1rem; }
 .story-feature, .story-card, .listing-card, .event-card, .road-report-card, .filter-panel, .path-card, .category-card { border-radius: .65rem; }
-img { background: var(--cream); } /* placeholder hangat saat foto lambat dimuat */
 
 /* Logo teks Pandaan.id (gambar) */
 /* Logo transparan tanpa background, hampir persegi (475x482): tinggi yang mengatur, lebar mengikuti rasio.
