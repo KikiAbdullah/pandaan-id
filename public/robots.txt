@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Pratinjau berisi fixture; halaman HTML mengirim noindex, follow.
+Sitemap: https://pandaan.id/sitemap.xml
