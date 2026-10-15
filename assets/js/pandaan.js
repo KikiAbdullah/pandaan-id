@@ -149,7 +149,10 @@
     document.getElementById('eventTime')?.removeAttribute('required')
     document.getElementById('eventVenue')?.removeAttribute('required')
     const markRequired = (id) => { const f = byId(id); if (f) { f.required = true; f.dataset.requiredWas = '1' } }
-    ;['reportTime', 'reportLocation', 'businessAddress', 'eventTime', 'eventVenue'].forEach(markRequired)
+    ;['reportTime', 'reportLocation', 'businessAddress', 'eventTime', 'eventVenue', 'claimBusiness', 'claimRole', 'claimProof'].forEach(markRequired)
+    const jenisParam = new URLSearchParams(window.location.search).get('jenis')
+    const jenisMap = { klaim: 'claim', claim: 'claim', laporan: 'report', report: 'report', usaha: 'business', business: 'business', event: 'event' }
+    if (typeSelect && jenisParam && jenisMap[jenisParam]) typeSelect.value = jenisMap[jenisParam]
     typeSelect?.addEventListener('change', syncSections)
     all('[data-contribution-tab]').forEach((button) => button.addEventListener('click', () => {
       if (typeSelect) typeSelect.value = button.dataset.contributionTab || 'report'
@@ -165,10 +168,11 @@
         type: 'Jenis', title: 'Judul/nama', whatsapp: 'WhatsApp pelapor',
         report_time: 'Waktu kejadian', report_location: 'Titik lokasi', report_photo: 'Tautan foto',
         business_address: 'Alamat usaha', business_hours: 'Jam buka', business_price: 'Kisaran harga',
+        claim_business: 'Usaha yang diklaim', claim_role: 'Peran pengklaim', claim_proof: 'Bukti kepemilikan',
         event_time: 'Tanggal & jam acara', event_venue: 'Lokasi acara', event_organizer: 'Penyelenggara',
         details: 'Keterangan',
       }
-      const typeLabel = ({ report: 'Lapor kondisi jalan', business: 'Usulkan usaha lokal', event: 'Kirim info event' })[typeSelect?.value || 'report'] || ''
+      const typeLabel = ({ report: 'Lapor kondisi jalan', business: 'Usulkan usaha lokal', event: 'Kirim info event', claim: 'Klaim usaha saya' })[typeSelect?.value || 'report'] || ''
       const lines = [`Kontribusi pandaan.id — ${typeLabel}`]
       new FormData(contribForm).forEach((value, key) => {
         const text = String(value).trim()
@@ -247,23 +251,23 @@
     }
     const badgeFor = { active: ['text-bg-success', 'Aktif'], incomplete: ['text-bg-warning', 'Perlu dilengkapi'], history: ['text-bg-secondary', 'Selesai'] }
     const cardHtml = (r, bucket) => {
-      const [cls, label] = badgeFor[bucket] || badgeFor.history
+      const [cls, label] = badgeFor[bucket === 'archived' ? 'history' : bucket] || badgeFor.history
       const valid = r.validUntil ? `<span><i class="ph ph-hourglass me-1"></i>Berlaku s.d. <time datetime="${esc(r.validUntil)}">${esc(fmtWhen(r.validUntil))}</time></span>` : ''
       const link = bucket === 'incomplete'
-        ? '<a class="text-link mt-3" href="../kontribusi">Bantu lengkapi laporan <i class="ph ph-arrow-right"></i></a>'
-        : (r.detailUrl ? `<a class="text-link mt-3" href="../info-jalan/${esc(r.detailUrl)}">Lihat detail laporan <i class="ph ph-arrow-right"></i></a>` : '')
+        ? `<a class="text-link mt-3" href="${siteBase}kontribusi/">Bantu lengkapi laporan <i class="ph ph-arrow-right"></i></a>`
+        : (r.detailUrl ? `<a class="text-link mt-3" href="${siteBase}info-jalan/${esc(r.detailUrl)}">Lihat detail laporan <i class="ph ph-arrow-right"></i></a>` : '')
       return `<div class="col-lg-4"><article class="road-report-card"><div class="d-flex justify-content-between gap-2"><span class="eyebrow">${esc(r.type)}</span><span class="badge ${cls}">${label}</span></div><h3>${esc(r.title)}</h3><div class="road-report-meta"><span><i class="ph ph-map-pin me-1"></i>${esc(r.location)}</span><span><i class="ph ph-clock me-1"></i><time datetime="${esc(r.observedAt)}">${esc(fmtWhen(r.observedAt))}</time></span>${valid}</div><div class="road-report-note">${esc(r.note)}</div>${link}</article></div>`
     }
     let roadData = []
     const renderRoad = () => {
       const now = new Date()
-      const buckets = { active: [], incomplete: [], history: [] }
+      const buckets = { active: [], incomplete: [], history: [], archived: [] }
       roadData.forEach((r) => { const b = bucketOf(r, now); if (buckets[b]) buckets[b].push(r) })
-      const groups = { active: buckets.active, all: [...buckets.active, ...buckets.incomplete, ...buckets.history], incomplete: buckets.incomplete, history: buckets.history }
+      const groups = { active: buckets.active, all: [...buckets.active, ...buckets.incomplete, ...buckets.history], incomplete: buckets.incomplete, history: buckets.history, archive: [...buckets.history, ...buckets.archived] }
       Object.entries(groups).forEach(([key, items]) => {
         const list = document.querySelector(`[data-road-list="${key}"]`)
         const empty = document.querySelector(`[data-road-empty="${key}"]`)
-        if (list) list.innerHTML = items.map((r) => cardHtml(r, key === 'all' ? bucketOf(r, now) : key)).join('')
+        if (list) list.innerHTML = items.map((r) => cardHtml(r, (key === 'all' || key === 'archive') ? bucketOf(r, now) : key)).join('')
         empty?.classList.toggle('d-none', items.length > 0)
         const badge = document.querySelector(`[data-road-count="${key}"]`)
         if (badge) badge.textContent = String(items.length)
@@ -288,6 +292,54 @@
   all('form').forEach((form) => form.addEventListener('submit', (event) => {
     if (form.querySelector('[name="website"]')?.value) { event.preventDefault(); event.stopImmediatePropagation() }
   }, true))
+
+  // Arsip event: event yang tanggalnya lewat diambil dari indeks event.
+  const pastBox = document.querySelector('[data-past-events]')
+  if (pastBox) {
+    const scriptSrc2 = document.querySelector('script[src*="pandaan.js"]')?.src || ''
+    const base2 = scriptSrc2.includes('/assets/js/') ? scriptSrc2.split('/assets/js/')[0] + '/' : new URL('./', window.location.href).href
+    fetch(base2 + 'event/')
+      .then((res) => res.text())
+      .then((htmlText) => {
+        const doc = new DOMParser().parseFromString(htmlText, 'text/html')
+        const today = new Date(); today.setHours(0, 0, 0, 0)
+        let count = 0
+        doc.querySelectorAll('[data-event-item][data-event-date]').forEach((item) => {
+          const d = new Date(item.dataset.eventDate + 'T00:00:00')
+          if (Number.isNaN(d.getTime()) || d >= today) return
+          const clone = item.cloneNode(true)
+          clone.querySelectorAll('a[href]').forEach((a) => { a.href = new URL(a.getAttribute('href'), base2 + 'event/').href })
+          clone.className = 'col-sm-6 col-lg-3'
+          pastBox.appendChild(clone); count += 1
+        })
+        document.querySelector('[data-past-events-empty]')?.classList.toggle('d-none', count > 0)
+      })
+      .catch(() => document.querySelector('[data-past-events-empty]')?.classList.remove('d-none'))
+  }
+
+  // Pencarian seluruh situs (/cari/): indeks statis JSON berisi berita, event, usaha.
+  const searchInput = document.querySelector('[data-site-search-input]')
+  if (searchInput) {
+    const resultsBox = document.querySelector('[data-site-search-results]')
+    const status = document.querySelector('[data-site-search-status]')
+    const scriptSrc3 = document.querySelector('script[src*="pandaan.js"]')?.src || ''
+    const base3 = scriptSrc3.includes('/assets/js/') ? scriptSrc3.split('/assets/js/')[0] + '/' : new URL('./', window.location.href).href
+    const escHtml = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
+    let index = []
+    const runSearch = () => {
+      const q = searchInput.value.trim().toLocaleLowerCase('id')
+      if (!q) { resultsBox.innerHTML = ''; status.textContent = 'Ketik kata kunci untuk mencari di berita, event, dan direktori usaha sekaligus.'; return }
+      const hits = index.filter((it) => `${it.title} ${it.desc} ${it.type} ${it.keywords || ''}`.toLocaleLowerCase('id').includes(q))
+      status.textContent = hits.length ? `${hits.length} hasil untuk “${searchInput.value.trim()}”.` : `Tidak ada hasil untuk “${searchInput.value.trim()}”. Coba kata yang lebih umum.`
+      resultsBox.innerHTML = hits.map((it) => `<article class="road-report-card mb-3"><span class="eyebrow">${escHtml(it.type)}</span><h3 class="mt-1"><a class="text-reset" href="${base3}${escHtml(it.url)}">${escHtml(it.title)}</a></h3><p class="text-secondary mb-0">${escHtml(it.desc)}</p></article>`).join('')
+    }
+    fetch(base3 + 'assets/data/search-index.json', { cache: 'no-cache' })
+      .then((res) => res.json())
+      .then((data) => { index = Array.isArray(data) ? data : []; searchInput.value = new URLSearchParams(window.location.search).get('q') || searchInput.value; runSearch() })
+      .catch(() => { status.textContent = 'Indeks pencarian gagal dimuat. Jelajahi lewat Berita, Event, atau Direktori.' })
+    searchInput.addEventListener('input', runSearch)
+    document.querySelector('form[role="search"]')?.addEventListener('submit', (e) => { e.preventDefault(); runSearch() })
+  }
 
   // PWA opsional. Path diturunkan dari lokasi pandaan.js sendiri, jadi aman di
   // subpath GitHub Pages (username.github.io/nama-repo/) maupun custom domain.

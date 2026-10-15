@@ -1,0 +1,128 @@
+[
+ {
+  "type": "Berita · Panduan",
+  "title": "Mencari jeda di kaki Penanggungan",
+  "desc": "Panduan akhir pekan di kaki Penanggungan: sudut sejuk, jam berkunjung, dan Kisaran tiket dari Tretes sampai Prigen.",
+  "url": "berita/akhir-pekan-di-kaki-penanggungan/",
+  "keywords": "panduan"
+ },
+ {
+  "type": "Berita · Komunitas",
+  "title": "Bank sampah Kasri ubah 2 ton sampah jadi tabungan warga",
+  "desc": "Bank sampah di Kasri, Pandaan: warga memilah sampah dari 340 rumah menjadi tabungan, posyandu, dan beasiswa.",
+  "url": "berita/bank-sampah-kasri-ubah-sampah-jadi-tabungan/",
+  "keywords": "komunitas"
+ },
+ {
+  "type": "Berita · Kuliner",
+  "title": "Rawon dan soto langganan sopir lintas di Raya Pandaan",
+  "desc": "Warung rawon dan soto di jalur Raya Pandaan yang jadi langganan sopir lintas sejak subuh.",
+  "url": "berita/rawon-dan-soto-langganan-sopir-lintas/",
+  "keywords": "kuliner"
+ },
+ {
+  "type": "Berita · Panduan",
+  "title": "Setengah hari di Prigen: rute hemat tanpa macet akhir pekan",
+  "desc": "Itinerary setengah hari di Prigen dari Pandaan: urutan rute, jam berangkat, dan perkiraan biaya.",
+  "url": "berita/rute-setengah-hari-di-prigen/",
+  "keywords": "panduan"
+ },
+ {
+  "type": "Berita · Komunitas",
+  "title": "Sanggar tari di Pandaan yang muridnya tampil sampai luar kota",
+  "desc": "Sanggar tari tradisional di Pandaan melatih 80 anak tiap pekan dan tampil ke luar kota.",
+  "url": "berita/sanggar-tari-pandaan-tampil-luar-kota/",
+  "keywords": "komunitas"
+ },
+ {
+  "type": "Berita · Kuliner",
+  "title": "Dapur rumahan Prigen yang pesanan kateringnya antre sepekan",
+  "desc": "Dapur rumahan di Prigen mengerjakan 120 porsi katering per hari dari dapur 3x4 meter.",
+  "url": "berita/dapur-rumahan-prigen-pesanan-antre/",
+  "keywords": "kuliner"
+ },
+ {
+  "type": "Event · Bazar & komunitas",
+  "title": "Pasar Kreatif Pandaan — pandaan.id",
+  "desc": "Pasar Kreatif Pandaan, Sabtu 17 Oktober 2026 di Alun-alun Pandaan: 60+ tenant UMKM, gratis. ",
+  "url": "event/pasar-kreatif-pandaan/",
+  "keywords": "bazar & komunitas"
+ },
+ {
+  "type": "Event · Olahraga",
+  "title": "Lari Pagi Bareng Warga — pandaan.id",
+  "desc": "Lari pagi 5K bersama warga, Minggu 18 Oktober 2026 start Alun-alun Pandaan pukul 05.30 WIB.",
+  "url": "event/lari-pagi-bareng-warga/",
+  "keywords": "olahraga"
+ },
+ {
+  "type": "Event · Musik",
+  "title": "Panggung Musik Sore — pandaan.id",
+  "desc": "Panggung musik sore, Sabtu 24 Oktober 2026 di Taman Candra Wilwatikta: enam band lokal Pandaan-Prigen.",
+  "url": "event/panggung-musik-sore/",
+  "keywords": "musik"
+ },
+ {
+  "type": "Event · Wisata & alam",
+  "title": "Jelajah Alam Kaki Penanggungan — pandaan.id",
+  "desc": "Jelajah alam kaki Penanggungan, Minggu 25 Oktober 2026, titik kumpul Prigen, kuota 40 orang termasuk pemandu.",
+  "url": "event/jelajah-alam-kaki-penanggungan/",
+  "keywords": "wisata & alam"
+ },
+ {
+  "type": "Direktori · Kafe & Nongkrong",
+  "title": "Kedai Sore Pandaan",
+  "desc": "Kopi susu, pisang goreng, dan sudut kerja dengan Wi-Fi kencang. Ramai selepas pukul empat sore.",
+  "url": "direktori/kafe/kedai-sore/",
+  "keywords": "kafe & nongkrong pandaan"
+ },
+ {
+  "type": "Direktori · Kuliner",
+  "title": "Pawon Nusa Rasa",
+  "desc": "Masakan Jawa rumahan: rawon, soto, dan sayur lodeh dimasak harian. Langganan keluarga Prigen sejak 2011.",
+  "url": "direktori/kuliner/pawon-nusa-rasa/",
+  "keywords": "kuliner prigen"
+ },
+ {
+  "type": "Direktori · Kafe & Nongkrong",
+  "title": "Ruang Teduh Coffee",
+  "desc": "Biji arabika lereng Penanggungan diseduh manual brew. Ada area lesehan menghadap taman.",
+  "url": "direktori/kafe/ruang-teduh-coffee/",
+  "keywords": "kafe & nongkrong taman dayu"
+ },
+ {
+  "type": "Direktori · Penginapan",
+  "title": "Arjuno View Stay",
+  "desc": "Kabin dan kamar keluarga menghadap Penanggungan. Sarapan nasi pecel termasuk untuk dua tamu.",
+  "url": "direktori/penginapan/Arjuno-view-stay/",
+  "keywords": "penginapan prigen"
+ },
+ {
+  "type": "Direktori · Wisata",
+  "title": "Taman Lereng Pandaan",
+  "desc": "Taman keluarga dengan kolam anak, gazebo, dan jalur trekking ringan di kaki lereng.",
+  "url": "direktori/wisata/taman-lereng-pandaan/",
+  "keywords": "wisata prigen"
+ },
+ {
+  "type": "Direktori · Jasa",
+  "title": "Bengkel Sahabat Pandaan",
+  "desc": "Servis motor dan mobil, ganti oli, dan Tambal ban. Bisa panggilan darurat dalam kota Pandaan.",
+  "url": "direktori/jasa/bengkel-sahabat-pandaan/",
+  "keywords": "jasa pandaan"
+ },
+ {
+  "type": "Direktori · Belanja",
+  "title": "Pusat Oleh-oleh Pandaan",
+  "desc": "Oleh-oleh khas Pandaan: keripik, kopi lereng, dan Jenang. Bisa pesan bungkus untuk acara.",
+  "url": "direktori/belanja/pusat-oleh-oleh-pandaan/",
+  "keywords": "belanja pandaan"
+ },
+ {
+  "type": "Direktori · Kuliner",
+  "title": "Dapur Kampung Raya",
+  "desc": "Nasi campur dan lauk rumahan berganti tiap hari. Menerima katering pengajian dan kantor.",
+  "url": "direktori/kuliner/dapur-kampung-raya/",
+  "keywords": "kuliner pandaan"
+ }
+]

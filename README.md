@@ -127,3 +127,16 @@ validUntil, state, note, detailUrl) dan dirender oleh `assets/js/pandaan.js`.
   tiap menit selama halaman terbuka, dan angka pada tab selalu dihitung dari data.
 - Bila nanti ada backend/CMS, cukup hasilkan berkas JSON yang sama — tampilan
   tidak perlu diubah.
+
+## Halaman pelengkap (pra-publikasi)
+
+- `syarat-ketentuan/` — S&K & disclaimer (Info Jalan bukan sumber resmi, kiriman kontributor, tautan keluar). Footer legal kini memuatnya di semua halaman.
+- Indeks kategori: `berita/kategori/` dan `direktori/kuliner|kafe|wisata|belanja|jasa|penginapan/` agar URL yang dipotong tidak 404.
+- `info-jalan/arsip/` — arsip laporan berakhir/kedaluwarsa (dirender dari JSON yang sama, bucket `archive`).
+- Klaim usaha: chip "Klaim usaha saya" di `kontribusi/` (pratersedia via `?jenis=klaim` dari halaman detail usaha), lengkap dengan bidang bukti kepemilikan dan langkah verifikasi redaksi.
+- `cari/` — pencarian seluruh situs dari `assets/data/search-index.json` (berita, event, direktori). Modal "Cari usaha" tetap khusus direktori dan menaut ke halaman ini.
+- `redaksi/` + `penulis/raka-Prasetyo/` + `penulis/Dewi Lestari/` — profil penulis; byline artikel kini bertaut. Nama masih contoh pratinjau.
+- `event/arsip/` — event lampau dikumpulkan otomatis dari `data-event-date` di indeks event.
+- `nomor-penting/` — nomor darurat nasional bertaut `tel:`; nomor lokal ditandai wajib diverifikasi sebelum publikasi.
+- `feed.xml` — RSS berita (statis; perbarui bersamaan dengan artikel baru, `pubDate` wajib zona +07:00).
+- Pedoman Redaksi: nama Penanggung Jawab **belum** dicantumkan (keputusan: tanpa mengarang nama) — wajib diisi sebelum rilis.

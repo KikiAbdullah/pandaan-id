@@ -23,7 +23,7 @@ for p in sorted(root.rglob("*.html")):
         ("dock tepat 5 item", t.count("dock-item") == 5),
         ("dock tanpa Cari/Kontribusi", ">Cari<" not in dock and "Kontribusi" not in dock),
         ("urutan dock baku", [dock.find(">" + l + "<") for l in ["Beranda", "Berita", "Info Jalan", "Direktori", "Event"]] == sorted(dock.find(">" + l + "<") for l in ["Beranda", "Berita", "Info Jalan", "Direktori", "Event"])),
-        ("footer legal", "footer-legal" in t and "kebijakan-privasi" in t and "pedoman-redaksi" in t),
+        ("footer legal", "footer-legal" in t and "kebijakan-privasi" in t and "pedoman-redaksi" in t and "syarat-ketentuan" in t),
         ("SRI phosphor", "integrity=\"sha384-" in t or "phosphor" not in t.lower()),
     ]:
         if not ok:
