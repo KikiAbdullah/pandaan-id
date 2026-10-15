@@ -1,14 +1,14 @@
 /* pandaan.id — custom layer on top of Bootstrap 5.3 */
 :root {
-  --pine: #173f35;
-  --pine-deep: #102f29;
-  --pine-soft: #e8f0e9;
-  --ink: #20352d;
-  --muted: #5f6f65;
-  --line: #e3e9e3;
-  --paper: #fcfbf8;
-  --cream: #f4f1e8;
-  --coral: #b45535;
+  --pine: #2F5D46;
+  --pine-deep: #1E4030;
+  --pine-soft: #E4EBDD;
+  --ink: #1F2933;
+  --muted: #55636B;
+  --line: #E0D8C6;
+  --paper: #F5F0E6;
+  --cream: #EFE7D6;
+  --coral: #B3402A;
   --gold: #d7a951;
   --radius-card: 1.25rem;
   --shadow-soft: 0 18px 48px rgba(22, 53, 42, .09);
@@ -20,7 +20,6 @@ body {
   padding-bottom: 0;
   color: var(--ink);
   background: var(--paper);
-  font-family: "DM Sans", "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -634,15 +633,6 @@ body { color: var(--ink); background: var(--paper); font-size: 1rem; }
 }
 
 :root {
-  --paper: #F5F0E6;          /* krem kertas */
-  --cream: #EFE7D6;
-  --ink: #1F2933;            /* tinta */
-  --muted: #55636B;
-  --pine: #2F5D46;           /* hijau lereng Penanggungan */
-  --pine-deep: #1E4030;
-  --pine-soft: #E4EBDD;
-  --line: #E0D8C6;
-  --coral: #B3402A;          /* merah bata */
   --coral-dark: #96331F;
   --surface: #FFFDF8;
   --font-head: "Fraunces", Georgia, "Times New Roman", serif;
@@ -701,3 +691,15 @@ h1, h2, h3, .page-title, .section-heading h2, .hero-copy h1, .cta-band h2,
   .brand-logo { height: 46px; }
   .site-footer .brand-logo { height: 56px; }
 }
+
+/* Pengganti atribut style inline */
+.article-wrap { max-width: 900px; }
+.hp-field { position: absolute; left: -9999px; }
+.road-disclaimer--light { background: #f7f4ea; color: #6c5731; border: 1px solid #eee5ce; }
+.road-empty--dark { background: var(--pine); color: #e1ebe3; }
+.footer-legal { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.14); }
+.dock-scroll { display: flex; overflow-x: auto; scrollbar-width: none; }
+.dock-scroll::-webkit-scrollbar { display: none; }
+.mobile-dock .dock-item { display: flex; flex: 1 0 4.2rem; flex-direction: column; align-items: center; justify-content: center; gap: .12rem; min-height: 60px; border: 0; background: none; color: #53645a; font-size: .72rem; font-weight: 750; text-decoration: none; }
+.mobile-dock .dock-item i { font-size: 1.25rem; }
+.mobile-dock .dock-item.active { color: var(--pine); }

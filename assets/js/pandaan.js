@@ -135,7 +135,11 @@
           else { if (field.required) field.dataset.requiredWas = '1'; field.required = false }
         })
       })
-      all('[data-contribution-tab]').forEach((item) => item.classList.toggle('active', item.dataset.contributionTab === type))
+      all('[data-contribution-tab]').forEach((item) => {
+        const selected = item.dataset.contributionTab === type
+        item.classList.toggle('active', selected)
+        item.setAttribute('aria-pressed', String(selected))
+      })
     }
     // tandai kolom wajib bawaan tiap seksi sebelum disembunyikan
     sections.forEach((section) => section.querySelectorAll('[required]').forEach((f) => { f.dataset.requiredWas = '1' }))

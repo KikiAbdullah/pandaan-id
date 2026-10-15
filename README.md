@@ -11,7 +11,7 @@ Struktur folder = struktur URL. Folder berisi `index.html` agar URL bersih beker
 ```
 index.html                                → /
 berita/index.html                         → /berita/
-berita/akhir-pekan-di-kaki-arjuno/        → /berita/akhir-pekan-di-kaki-arjuno/
+berita/akhir-pekan-di-kaki-penanggungan/        → /berita/akhir-pekan-di-kaki-penanggungan/
 info-jalan/index.html                     → /info-jalan/
 info-jalan/road-1/                        → /info-jalan/road-1/
 direktori/index.html                      → /direktori/
@@ -93,3 +93,25 @@ Prinsip: sesedikit mungkin, versi terkunci, tidak ada `@latest`.
 - Yang **tidak** dipakai & alasannya: jQuery, Swiper/FullCalendar (berat), AOS (terlihat generik). Carousel cukup CSS `scroll-snap`; peta Leaflet+OSM hanya dimuat saat elemen terlihat/diklik bila nanti ditambahkan.
 - Form statis tidak bisa mengirim data: form saat ini demo + honeypot `name="website"`. Saat rilis, sambungkan ke Web3Forms/Formspree (+ Cloudflare Turnstile) — cukup ganti `action` form, tanpa backend.
 - Analitik: belum dipasang. Bila perlu, pakai GoatCounter/Cloudflare Web Analytics, atau GA4 hanya setelah persetujuan cookie.
+
+## Arsitektur informasi
+
+- Navbar desktop: Beranda, Berita, Info Jalan, Direktori, Event + tombol **Cari usaha** (memang hanya mencari direktori — labelnya dibuat jujur) dan **Kontribusi**. Kerja Sama (urusan B2B/iklan) tidak lagi di navbar; tautannya ada di footer bersama Kebijakan Privasi dan Pedoman Redaksi.
+- Dock mobile memuat 7 item yang bisa digeser: Beranda, Berita, Cari, Direktori, Event, Info Jalan, Kontribusi.
+- Berita punya halaman **Arsip** (`berita/arsip/`) dan **kategori** (`berita/kategori/panduan|komunitas|kuliner/`). Dengan 6 artikel, paginasi belum diperlukan; tambahkan saat arsip melewati ±24 artikel.
+
+## Kepatuhan & analytics
+
+- `kebijakan-privasi/` menjelaskan data formulir dan hak subjek data menurut UU PDP No. 27/2022 (draf pratinjau — wajib ditinjau ahli hukum sebelum operasi penuh).
+- `pedoman-redaksi/` memuat standar verifikasi, label Kerja Sama, susunan redaksi, serta mekanisme hak jawab/koreksi (konfirmasikan kebutuhan persisnya ke ahli hukum/Dewan Pers).
+- Analytics **sengaja belum dipasang**, jadi tidak ada klaim audiens di halaman Kerja Sama. Saat dibutuhkan, pakai GoatCounter atau Cloudflare Web Analytics (ringan, tanpa cookie pelacak) dan perbarui Kebijakan Privasi sebelum mengaktifkannya.
+
+## Menjaga layout tetap seragam
+
+Header/footer/modal/dock tersalin di tiap file HTML (konsekuensi situs statis tanpa build). Cegah drift dengan menjalankan pemeriksa ini setiap selesai mengedit banyak halaman:
+
+```bash
+python3 docs/scripts/check_layout.py
+```
+
+Skrip itu gagal (exit 1) bila ada halaman yang navbar/dock/modal/footer-nya menyimpang dari pola baku.
