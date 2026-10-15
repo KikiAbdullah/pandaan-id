@@ -1,0 +1,22 @@
+# Build / dependency artifacts (the public UI itself needs no Node build)
+/node_modules/
+/dist/
+
+# Laravel / PHP environment
+.env
+.env.*
+!.env.example
+/vendor/
+/storage/*.key
+/storage/logs/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/views/
+/bootstrap/cache/*.php
+/public/hot
+/public/build/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
