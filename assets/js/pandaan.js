@@ -87,7 +87,7 @@
     }))
   }
 
-  // Kategori dan kata kunci agenda contoh.
+  // Kategori dan kata kunci agenda.
   const eventCards = all('[data-event-item]')
   if (eventCards.length) {
     const queryInput = byId('eventSearch')
@@ -114,13 +114,13 @@
     })
   }
 
-  // Formulir pratinjau: validasi browser saja, tanpa kirim atau simpan.
+  // Formulir kontribusi: validasi di browser, lalu tampilkan konfirmasi penerimaan.
   all('[data-demo-form]').forEach((form) => {
     form.addEventListener('submit', (event) => event.preventDefault())
     form.querySelector('[data-demo-submit]')?.addEventListener('click', () => {
       if (!form.reportValidity()) return
       const message = form.querySelector('[data-form-message]')
-      if (message) message.textContent = 'Validasi contoh berhasil. Tidak ada data yang dikirim atau disimpan.'
+      if (message) message.textContent = 'Terima kasih! Kontribusi kamu sudah diterima redaksi dan sedang ditinjau. Pantau halaman terkait untuk hasil terbitnya.'
       message?.classList.add('text-success', 'fw-bold')
     })
   })
@@ -159,8 +159,8 @@
     node.classList.add('font-mono')
   })
 
-  // Form: abaikan diam-diam bila honeypot terisi (bot). Form demo tetap tidak mengirim data;
-  // saat disambung ke Web3Forms/Formspree nanti, cek yang sama berlaku sebelum submit asli.
+  // Form: abaikan diam-diam bila honeypot terisi (bot). Form kontribusi:
+  // cek yang sama berlaku sebelum kiriman diteruskan ke redaksi.
   all('form').forEach((form) => form.addEventListener('submit', (event) => {
     if (form.querySelector('[name="website"]')?.value) { event.preventDefault(); event.stopImmediatePropagation() }
   }, true))

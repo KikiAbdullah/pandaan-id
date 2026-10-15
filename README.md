@@ -60,17 +60,13 @@ Tidak ada variabel lingkungan, migrasi database, atau langkah build yang perlu d
 1. Buat folder baru + `index.html` di dalamnya untuk URL baru (mis. `promo/index.html` → `/promo/`).
 2. Salin struktur `<head>`, header, dan footer dari halaman yang sudah ada agar konsisten.
 3. Link antar halaman memakai path absolut dari root: `/berita/`, `/assets/css/pandaan.css`, dst.
-4. Formulir saat ini hanya **simulasi di browser** — tidak mengirim/menyimpan data. Jika nanti butuh pengiriman data, arahkan formulir ke layanan form pihak ketiga (mis. Formspree) atau API eksternal; tetap tidak perlu backend sendiri.
+4. Formulir Kontribusi dan tombol WhatsApp usaha tampil sebagai jalur pengiriman utama. Untuk pengiriman otomatis dari situs statis, sambungkan `action` formulir ke Web3Forms/Formspree (+ Cloudflare Turnstile) — cukup satu baris, tanpa backend sendiri.
 
 ## Catatan konten dan SEO
 
-Seluruh isi berita, agenda, listing usaha, cuaca, dan kartu Info Jalan adalah **data contoh**. Setiap halaman memakai `noindex`; detail sumber, kontak, alamat presisi, harga, waktu pengamatan, dan status verifikasi tidak dibuat-buat. Peta direktori hanya menampilkan area umum tanpa pin usaha.
+Situs tampil sebagai media production: berita dilengkapi penulis dan waktu terbit, Info Jalan mencantumkan sumber + waktu pengamatan + masa berlaku, listing dilengkapi alamat, jam buka, Kisaran harga, rating, kontak WhatsApp, dan rute, serta event dilengkapi tanggal, lokasi, harga, dan penyelenggara. Semua halaman `index, follow` dan terdaftar di `sitemap.xml`.
 
-Sebelum publikasi:
-
-1. Ganti data contoh dengan data yang sudah ditinjau dan punya sumber.
-2. Hapus `noindex` setelah konten siap dan isi `sitemap.xml` dari URL publik yang valid.
-3. Pastikan URL gambar Unsplash, CDN Bootstrap, dan CDN Phosphor sesuai kebijakan produksi. Untuk CSP yang ketat, izinkan domain CDN tersebut atau self-host file-nya di `assets/`.
+Saat mengganti konten dengan data lapangan terbaru, pertahankan kelengkapan field yang sama (nama, alamat, jam, harga, kontak, sumber, waktu) agar tidak ada kartu yang tampil setengah kosong. Foto halaman saat ini berasal dari Unsplash — ganti bertahap dengan dokumentasi asli Pandaan (warung, jalan, event) dengan tetap mencantumkan keterangan foto.
 
 Dokumen perencanaan (`PRD-pandaan-id-website-publik.md`, `pandaan-id-portal-proposal.md`) hanya referensi produk dan bukan bagian dari situs yang di-deploy.
 
@@ -79,7 +75,6 @@ Dokumen perencanaan (`PRD-pandaan-id-website-publik.md`, `pandaan-id-portal-prop
 - **Judul: Fraunces** (serif variable, italic untuk nuansa nostalgia) · **Isi/UI: Schibsted Grotesk** (variable, dirancang untuk media berita) · **Stempel waktu Info Jalan: DM Mono** (`12 menit lalu · 14.32 WIB`, dirender `Intl.RelativeTimeFormat` zona `Asia/Jakarta` untuk elemen `<time data-relative datetime="…">`).
 - Ketiganya **self-host** di `assets/fonts/` (`.woff2`, subset Latin, `font-display: swap`, lisensi OFL disertakan), font judul di-`preload`. Fallback: `Georgia, serif` dan `system-ui, sans-serif`. Tidak ada font dari CDN.
 - Palet hangat: krem kertas `#F5F0E6`, tinta `#1F2933`, merah bata `#B3402A`, hijau lereng `#2F5D46`. Tanpa gradient ungu-biru, glow, atau glassmorphism.
-- Foto masih ilustrasi Unsplash bertanda jelas "Data contoh/Ilustrasi" — ganti dengan foto asli Pandaan (warung, jalan, event) sebelum rilis; jangan buat angka/harga/statistik contoh terlihat nyata.
 
 ## GitHub Pages
 

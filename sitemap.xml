@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Ditulis manual (tidak ada generator). Halaman masih noindex selama konten contoh;
-       isi daftar URL di sini bersamaan dengan melepas noindex saat rilis. -->
+  <!-- Ditulis manual (tidak ada generator). Perbarui tanggal & daftar saat menambah halaman. -->
   <url><loc>https://pandaan.id/</loc></url>
   <url><loc>https://pandaan.id/berita/</loc></url>
   <url><loc>https://pandaan.id/info-jalan/</loc></url>
@@ -10,4 +9,15 @@
   <url><loc>https://pandaan.id/tentang/</loc></url>
   <url><loc>https://pandaan.id/kerja-sama/</loc></url>
   <url><loc>https://pandaan.id/kontribusi/</loc></url>
+  <url><loc>https://pandaan.id/berita/akhir-pekan-di-kaki-arjuno/</loc></url>
+  <url><loc>https://pandaan.id/info-jalan/road-1/</loc></url>
+  <url><loc>https://pandaan.id/event/pasar-kreatif-pandaan/</loc></url>
+  <url><loc>https://pandaan.id/direktori/kafe-and-nongkrong/kedai-sore/</loc></url>
+  <url><loc>https://pandaan.id/direktori/kafe-and-nongkrong/ruang-teduh-coffee/</loc></url>
+  <url><loc>https://pandaan.id/direktori/kuliner/pawon-nusa-rasa/</loc></url>
+  <url><loc>https://pandaan.id/direktori/kuliner/dapur-kampung-raya/</loc></url>
+  <url><loc>https://pandaan.id/direktori/penginapan/Arjuno-view-stay/</loc></url>
+  <url><loc>https://pandaan.id/direktori/wisata/taman-lereng-pandaan/</loc></url>
+  <url><loc>https://pandaan.id/direktori/jasa/bengkel-sahabat-pandaan/</loc></url>
+  <url><loc>https://pandaan.id/direktori/belanja/pusat-oleh-oleh-pandaan/</loc></url>
 </urlset>
