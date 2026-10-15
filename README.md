@@ -73,3 +73,26 @@ Sebelum publikasi:
 3. Pastikan URL gambar Unsplash, CDN Bootstrap, dan CDN Phosphor sesuai kebijakan produksi. Untuk CSP yang ketat, izinkan domain CDN tersebut atau self-host file-nya di `assets/`.
 
 Dokumen perencanaan (`PRD-pandaan-id-website-publik.md`, `pandaan-id-portal-proposal.md`) hanya referensi produk dan bukan bagian dari situs yang di-deploy.
+
+## Font & identitas visual
+
+- **Judul: Fraunces** (serif variable, italic untuk nuansa nostalgia) · **Isi/UI: Schibsted Grotesk** (variable, dirancang untuk media berita) · **Stempel waktu Info Jalan: DM Mono** (`12 menit lalu · 14.32 WIB`, dirender `Intl.RelativeTimeFormat` zona `Asia/Jakarta` untuk elemen `<time data-relative datetime="…">`).
+- Ketiganya **self-host** di `assets/fonts/` (`.woff2`, subset Latin, `font-display: swap`, lisensi OFL disertakan), font judul di-`preload`. Fallback: `Georgia, serif` dan `system-ui, sans-serif`. Tidak ada font dari CDN.
+- Palet hangat: krem kertas `#F5F0E6`, tinta `#1F2933`, merah bata `#B3402A`, hijau lereng `#2F5D46`. Tanpa gradient ungu-biru, glow, atau glassmorphism.
+- Foto masih ilustrasi Unsplash bertanda jelas "Data contoh/Ilustrasi" — ganti dengan foto asli Pandaan (warung, jalan, event) sebelum rilis; jangan buat angka/harga/statistik contoh terlihat nyata.
+
+## GitHub Pages
+
+Repo ini siap GitHub Pages: file `CNAME` (`pandaan.id`) + `.nojekyll` sudah ada, dan **semua path internal relatif** (`./`, `../`) sehingga situs juga jalan di subpath `username.github.io/nama-repo/` bila CNAME dilepas. `404.html`, `robots.txt`, dan `sitemap.xml` (ditulis manual) ada di root. OG image absolut: `https://pandaan.id/assets/og-pandaan.jpg` (1200×630).
+
+Catatan: GitHub Pages melarang situs yang *terutama* untuk transaksi komersial. Landing/pitch aman; bila nanti ada iklan & listing berbayar, pindah ke Cloudflare Pages/Netlify (tinggal arahkan ke repo yang sama, tanpa build).
+
+## Library (tanpa build tool)
+
+Prinsip: sesedikit mungkin, versi terkunci, tidak ada `@latest`.
+
+- CSS/JS framework: Bootstrap 5.3.3 via CDN (SRI terkunci) — dipertahankan agar konsisten di semua halaman yang sudah terlanjur memakai grid/komponennya; CSS khusus di `assets/css/pandaan.css`.
+- Ikon: Phosphor via CDN versi terkunci (2.1.1). Interaksi (tab, filter, menu) cukup JS native di `assets/js/pandaan.js` — tidak perlu Alpine/jQuery untuk skala ini.
+- Yang **tidak** dipakai & alasannya: jQuery, Swiper/FullCalendar (berat), AOS (terlihat generik). Carousel cukup CSS `scroll-snap`; peta Leaflet+OSM hanya dimuat saat elemen terlihat/diklik bila nanti ditambahkan.
+- Form statis tidak bisa mengirim data: form saat ini demo + honeypot `name="website"`. Saat rilis, sambungkan ke Web3Forms/Formspree (+ Cloudflare Turnstile) — cukup ganti `action` form, tanpa backend.
+- Analitik: belum dipasang. Bila perlu, pakai GoatCounter/Cloudflare Web Analytics, atau GA4 hanya setelah persetujuan cookie.

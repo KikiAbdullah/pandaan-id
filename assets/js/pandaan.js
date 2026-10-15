@@ -144,8 +144,32 @@
     }
   }))
 
-  // PWA opsional. Tidak memengaruhi halaman bila service worker tidak didukung.
+  // Waktu relatif Info Jalan ("12 menit lalu") via Intl bawaan, zona Asia/Jakarta.
+  // Pakai: <time data-relative datetime="2026-10-15T14:32:00+07:00">…</time>
+  const relFmt = new Intl.RelativeTimeFormat('id-ID', { numeric: 'auto' })
+  const clockFmt = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' })
+  all('time[data-relative][datetime]').forEach((node) => {
+    const then = new Date(node.getAttribute('datetime'))
+    if (Number.isNaN(then.getTime())) return
+    const diffMin = Math.round((then.getTime() - Date.now()) / 60000)
+    const label = Math.abs(diffMin) < 60
+      ? relFmt.format(diffMin, 'minute')
+      : relFmt.format(Math.round(diffMin / 60), 'hour')
+    node.textContent = `${label} · ${clockFmt.format(then).replace(':', '.')} WIB`
+    node.classList.add('font-mono')
+  })
+
+  // Form: abaikan diam-diam bila honeypot terisi (bot). Form demo tetap tidak mengirim data;
+  // saat disambung ke Web3Forms/Formspree nanti, cek yang sama berlaku sebelum submit asli.
+  all('form').forEach((form) => form.addEventListener('submit', (event) => {
+    if (form.querySelector('[name="website"]')?.value) { event.preventDefault(); event.stopImmediatePropagation() }
+  }, true))
+
+  // PWA opsional. Path diturunkan dari lokasi pandaan.js sendiri, jadi aman di
+  // subpath GitHub Pages (username.github.io/nama-repo/) maupun custom domain.
   if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
-    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}), { once: true })
+    const scriptSrc = document.currentScript?.src || ''
+    const siteBase = scriptSrc.includes('/assets/js/') ? scriptSrc.split('/assets/js/')[0] + '/' : new URL('./', window.location.href).href
+    window.addEventListener('load', () => navigator.serviceWorker.register(siteBase + 'sw.js', { scope: siteBase }).catch(() => {}), { once: true })
   }
 })()

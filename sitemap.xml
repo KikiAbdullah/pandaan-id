@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Pratinjau sengaja tidak mencantumkan URL selama semua konten masih data contoh. -->
+  <!-- Ditulis manual (tidak ada generator). Halaman masih noindex selama konten contoh;
+       isi daftar URL di sini bersamaan dengan melepas noindex saat rilis. -->
+  <url><loc>https://pandaan.id/</loc></url>
+  <url><loc>https://pandaan.id/berita/</loc></url>
+  <url><loc>https://pandaan.id/info-jalan/</loc></url>
+  <url><loc>https://pandaan.id/direktori/</loc></url>
+  <url><loc>https://pandaan.id/event/</loc></url>
+  <url><loc>https://pandaan.id/tentang/</loc></url>
+  <url><loc>https://pandaan.id/kerja-sama/</loc></url>
+  <url><loc>https://pandaan.id/kontribusi/</loc></url>
 </urlset>

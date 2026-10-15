@@ -590,3 +590,92 @@ body { color: var(--ink); background: var(--paper); font-size: 1rem; }
 .badge { font-size: .75rem; line-height: 1.2; }
 
 .road-section :focus-visible, .site-footer :focus-visible { outline-color: #f0c979; }
+
+/* ============================================================
+   Editorial lokal (2026-10): Fraunces + Schibsted Grotesk, self-host.
+   Palet hangat spesifik: krem kertas, tinta, merah bata, hijau lereng.
+   Tanpa gradient ungu-biru, tanpa glassmorphism/glow.
+   ============================================================ */
+@font-face {
+  font-family: "Fraunces";
+  src: url("../fonts/fraunces-latin-var.woff2") format("woff2-variations");
+  font-weight: 100 900; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("../fonts/fraunces-latin-var-italic.woff2") format("woff2-variations");
+  font-weight: 100 900; font-style: italic; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("../fonts/schibsted-grotesk-latin-var.woff2") format("woff2-variations");
+  font-weight: 400 900; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("../fonts/schibsted-grotesk-latin-var-italic.woff2") format("woff2-variations");
+  font-weight: 400 900; font-style: italic; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "DM Mono";
+  src: url("../fonts/dm-mono-latin-400.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "DM Mono";
+  src: url("../fonts/dm-mono-latin-500.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --paper: #F5F0E6;          /* krem kertas */
+  --cream: #EFE7D6;
+  --ink: #1F2933;            /* tinta */
+  --muted: #55636B;
+  --pine: #2F5D46;           /* hijau lereng Penanggungan */
+  --pine-deep: #1E4030;
+  --pine-soft: #E4EBDD;
+  --line: #E0D8C6;
+  --coral: #B3402A;          /* merah bata */
+  --coral-dark: #96331F;
+  --surface: #FFFDF8;
+  --font-head: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+body { font-family: var(--font-body); color: var(--ink); background: var(--paper); line-height: 1.6; }
+h1, h2, h3, .page-title, .section-heading h2, .hero-copy h1, .cta-band h2,
+.story-body h2, .story-body h3, .listing-card h2, .listing-card h3,
+.event-card h2, .event-card h3, .road-card h3, .road-report-card h2, .road-report-card h3 {
+  font-family: var(--font-head); font-optical-sizing: auto; letter-spacing: -.01em;
+}
+.hero-copy h1 { font-weight: 560; }
+.hero-copy h1 em { font-style: italic; color: var(--coral); } /* italic Fraunces: nuansa nostalgia */
+.page-title, .section-heading h2 { font-weight: 580; }
+.brand-name { font-family: var(--font-head); font-weight: 650; }
+
+/* Stempel waktu & meta data: mono, kesan laporan lapangan */
+.story-footer, .road-report-meta, .event-date, .listing-meta, time, [data-timestamp] {
+  font-family: var(--font-mono); font-size: .78rem; letter-spacing: -.01em;
+}
+
+/* Ratakan permukaan: hilangkan gradient agar tidak generik */
+.home-hero, .page-hero { background: var(--paper); }
+.home-hero::before, .page-hero::after { display: none; }
+.road-section { background: var(--pine-deep); }
+.road-section::after { display: none; }
+.cta-band { background: var(--pine-deep); box-shadow: none; }
+.brand-mark { background: var(--pine); box-shadow: none; }
+.site-footer { background: var(--pine-deep); }
+.site-navbar, .mobile-dock { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
+
+/* Nuansa koran: garis tegas di atas judul seksi, kartu tidak terlalu membulat */
+.section-heading { border-top: 2px solid var(--ink); padding-top: 1rem; }
+.story-feature, .story-card, .listing-card, .event-card, .road-report-card, .filter-panel, .path-card, .category-card { border-radius: .65rem; }
+img { background: var(--cream); } /* placeholder hangat saat foto lambat dimuat */
