@@ -688,17 +688,17 @@ img { background: var(--cream); } /* placeholder hangat saat foto lambat dimuat 
   display: block;
   flex: 0 0 auto;
   width: auto;
-  height: clamp(34px, 1.6vw + 28px, 44px);
-  max-width: 34vw;
+  height: clamp(26px, 1vw + 22px, 32px);
+  max-width: 26vw;
   object-fit: contain;
 }
-.site-footer .brand-logo { height: clamp(40px, 2.4vw + 32px, 52px); max-width: 46vw; }
+.site-footer .brand-logo { height: clamp(32px, 1.6vw + 26px, 40px); max-width: 36vw; }
 .brand-logo-hero { height: clamp(76px, 20vw, 104px); max-width: 70vw; margin-inline: auto; }
 @media (max-width: 575.98px) {
-  .brand-logo { height: 34px; }
-  .site-footer .brand-logo { height: 42px; }
+  .brand-logo { height: 26px; }
+  .site-footer .brand-logo { height: 34px; }
 }
 @media (min-width: 1200px) {
-  .brand-logo { height: 44px; }
-  .site-footer .brand-logo { height: 52px; }
+  .brand-logo { height: 32px; }
+  .site-footer .brand-logo { height: 40px; }
 }
