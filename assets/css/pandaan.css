@@ -681,24 +681,24 @@ h1, h2, h3, .page-title, .section-heading h2, .hero-copy h1, .cta-band h2,
 img { background: var(--cream); } /* placeholder hangat saat foto lambat dimuat */
 
 /* Logo teks Pandaan.id (gambar) */
-/* Logo hampir persegi (487x488): tinggi yang mengatur, lebar mengikuti rasio.
+/* Logo transparan tanpa background, hampir persegi (475x482): tinggi yang mengatur, lebar mengikuti rasio.
    clamp() membuat logo membesar halus dari HP 360px sampai desktop,
    tanpa pernah mendesak tombol menu / navigasi keluar layar. */
 .brand-logo {
   display: block;
   flex: 0 0 auto;
   width: auto;
-  height: clamp(26px, 1vw + 22px, 32px);
-  max-width: 26vw;
+  height: clamp(38px, 1.2vw + 32px, 46px);
+  max-width: 32vw;
   object-fit: contain;
 }
-.site-footer .brand-logo { height: clamp(32px, 1.6vw + 26px, 40px); max-width: 36vw; }
+.site-footer .brand-logo { height: clamp(44px, 2vw + 34px, 56px); max-width: 44vw; }
 .brand-logo-hero { height: clamp(76px, 20vw, 104px); max-width: 70vw; margin-inline: auto; }
 @media (max-width: 575.98px) {
-  .brand-logo { height: 26px; }
-  .site-footer .brand-logo { height: 34px; }
+  .brand-logo { height: 38px; }
+  .site-footer .brand-logo { height: 44px; }
 }
 @media (min-width: 1200px) {
-  .brand-logo { height: 32px; }
-  .site-footer .brand-logo { height: 40px; }
+  .brand-logo { height: 46px; }
+  .site-footer .brand-logo { height: 56px; }
 }
