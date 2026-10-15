@@ -64,9 +64,11 @@ Tidak ada variabel lingkungan, migrasi database, atau langkah build yang perlu d
 
 ## Catatan konten dan SEO
 
-Situs tampil sebagai media production: berita dilengkapi penulis dan waktu terbit, Info Jalan mencantumkan sumber + waktu pengamatan + masa berlaku, listing dilengkapi alamat, jam buka, Kisaran harga, rating, kontak WhatsApp, dan rute, serta event dilengkapi tanggal, lokasi, harga, dan penyelenggara. Semua halaman `index, follow` dan terdaftar di `sitemap.xml`.
+Situs ini adalah **pratinjau dengan data contoh** dan keputusan ini berlaku konsisten di semua tempat: semua halaman memakai `noindex, follow`, menampilkan banner "Versi pratinjau — data contoh", dan `sitemap.xml` sengaja dikosongkan. Nama usaha, harga, jadwal, dan laporan jalan di halaman-halaman ini adalah contoh tampilan, bukan fakta terverifikasi; nomor telepon contoh sudah dicabut dan tidak ada tautan WhatsApp ke nomor placeholder.
 
-Saat mengganti konten dengan data lapangan terbaru, pertahankan kelengkapan field yang sama (nama, alamat, jam, harga, kontak, sumber, waktu) agar tidak ada kartu yang tampil setengah kosong. Foto halaman saat ini berasal dari Unsplash — ganti bertahap dengan dokumentasi asli Pandaan (warung, jalan, event) dengan tetap mencantumkan keterangan foto.
+Formulir Kontribusi tidak mengirim apa pun: ia hanya menyusun ringkasan kiriman (dengan kolom khusus per jenis: waktu/lokasi/foto untuk laporan jalan, alamat/jam/harga untuk usaha, tanggal/lokasi/penyelenggara untuk event) agar pelapor dapat meneruskannya sendiri. Jangan menampilkan pesan "sudah diterima" sebelum formulir benar-benar terhubung ke layanan pengiriman (mis. Web3Forms/Formspree + Turnstile).
+
+Saat mengganti data contoh dengan data lapangan yang terverifikasi, pertahankan kelengkapan field yang sama (nama, alamat, jam, harga, kontak, sumber, waktu), lalu lepas `noindex`, hapus banner pratinjau, dan isi kembali `sitemap.xml`. Foto halaman saat ini berasal dari Unsplash — ganti dengan dokumentasi asli Pandaan (warung, jalan, event) dengan tetap mencantumkan keterangan foto.
 
 Dokumen perencanaan (`PRD-pandaan-id-website-publik.md`, `pandaan-id-portal-proposal.md`) hanya referensi produk dan bukan bagian dari situs yang di-deploy.
 

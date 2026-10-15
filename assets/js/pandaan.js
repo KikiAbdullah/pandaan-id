@@ -114,21 +114,78 @@
     })
   }
 
-  // Formulir kontribusi: validasi di browser, lalu tampilkan konfirmasi penerimaan.
-  all('[data-demo-form]').forEach((form) => {
-    form.addEventListener('submit', (event) => event.preventDefault())
-    form.querySelector('[data-demo-submit]')?.addEventListener('click', () => {
-      if (!form.reportValidity()) return
-      const message = form.querySelector('[data-form-message]')
-      if (message) message.textContent = 'Terima kasih! Kontribusi kamu sudah diterima redaksi dan sedang ditinjau. Pantau halaman terkait untuk hasil terbitnya.'
-      message?.classList.add('text-success', 'fw-bold')
+  // Formulir kontribusi: kolom mengikuti jenis kiriman. Situs statis ini TIDAK
+  // mengirim apa pun — tombol hanya menyusun ringkasan agar pelapor bisa
+  // meneruskannya sendiri. Pesan sukses "sudah diterima" sengaja tidak dipakai.
+  const contribForm = document.querySelector('[data-contribution-form]')
+  if (contribForm) {
+    const typeSelect = byId('contributionType')
+    const sections = all('[data-fields-for]', contribForm)
+    const message = contribForm.querySelector('[data-form-message]')
+    const output = contribForm.querySelector('[data-form-output]')
+    const summaryBox = contribForm.querySelector('[data-summary]')
+
+    const syncSections = () => {
+      const type = typeSelect?.value || 'report'
+      sections.forEach((section) => {
+        const visible = section.dataset.fieldsFor === type
+        section.classList.toggle('d-none', !visible)
+        section.querySelectorAll('input, select, textarea').forEach((field) => {
+          if (visible) { if (field.dataset.requiredWas === '1') field.required = true }
+          else { if (field.required) field.dataset.requiredWas = '1'; field.required = false }
+        })
+      })
+      all('[data-contribution-tab]').forEach((item) => item.classList.toggle('active', item.dataset.contributionTab === type))
+    }
+    // tandai kolom wajib bawaan tiap seksi sebelum disembunyikan
+    sections.forEach((section) => section.querySelectorAll('[required]').forEach((f) => { f.dataset.requiredWas = '1' }))
+    document.getElementById('reportTime')?.removeAttribute('required')
+    document.getElementById('reportLocation')?.removeAttribute('required')
+    document.getElementById('businessAddress')?.removeAttribute('required')
+    document.getElementById('eventTime')?.removeAttribute('required')
+    document.getElementById('eventVenue')?.removeAttribute('required')
+    const markRequired = (id) => { const f = byId(id); if (f) { f.required = true; f.dataset.requiredWas = '1' } }
+    ;['reportTime', 'reportLocation', 'businessAddress', 'eventTime', 'eventVenue'].forEach(markRequired)
+    typeSelect?.addEventListener('change', syncSections)
+    all('[data-contribution-tab]').forEach((button) => button.addEventListener('click', () => {
+      if (typeSelect) typeSelect.value = button.dataset.contributionTab || 'report'
+      syncSections()
+    }))
+    syncSections()
+
+    contribForm.addEventListener('submit', (event) => {
+      event.preventDefault()
+      if (contribForm.querySelector('[name="website"]')?.value) return
+      if (!contribForm.reportValidity()) return
+      const labels = {
+        type: 'Jenis', title: 'Judul/nama', whatsapp: 'WhatsApp pelapor',
+        report_time: 'Waktu kejadian', report_location: 'Titik lokasi', report_photo: 'Tautan foto',
+        business_address: 'Alamat usaha', business_hours: 'Jam buka', business_price: 'Kisaran harga',
+        event_time: 'Tanggal & jam acara', event_venue: 'Lokasi acara', event_organizer: 'Penyelenggara',
+        details: 'Keterangan',
+      }
+      const typeLabel = typeSelect?.selectedOptions?.[0]?.textContent || ''
+      const lines = [`Kontribusi pandaan.id — ${typeLabel}`]
+      new FormData(contribForm).forEach((value, key) => {
+        const text = String(value).trim()
+        if (!text || key === 'website' || key === 'type') return
+        lines.push(`${labels[key] || key}: ${text}`)
+      })
+      if (summaryBox) summaryBox.value = lines.join('\n')
+      output?.classList.remove('d-none')
+      if (message) {
+        message.textContent = 'Ringkasan siap disalin di bawah. Laporan ini BELUM terkirim ke redaksi — situs pratinjau ini belum terhubung ke sistem pengiriman. Salin ringkasannya dan kirimkan lewat kanal redaksi agar benar-benar diterima.'
+        message.classList.remove('text-success')
+        message.classList.add('fw-bold')
+      }
+      output?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     })
-  })
-  all('[data-contribution-tab]').forEach((button) => button.addEventListener('click', () => {
-    const select = byId('contributionType')
-    if (select) select.value = button.dataset.contributionTab || 'report'
-    all('[data-contribution-tab]').forEach((item) => item.classList.toggle('active', item === button))
-  }))
+    contribForm.querySelector('[data-copy-summary]')?.addEventListener('click', async (event) => {
+      if (!summaryBox?.value) return
+      try { await navigator.clipboard.writeText(summaryBox.value); event.currentTarget.innerHTML = '<i class="ph ph-check me-1"></i>Ringkasan disalin' }
+      catch { summaryBox.select(); document.execCommand?.('copy') }
+    })
+  }
 
   // Bagikan halaman secara native jika tersedia; tidak ada analytics pihak ketiga.
   all('[data-share-page]').forEach((button) => button.addEventListener('click', async () => {
