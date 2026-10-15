@@ -1,45 +1,75 @@
-# pandaan.id — HTML + Bootstrap 5 untuk Laravel 13
+# pandaan.id — Static HTML
 
-Antarmuka publik ini menggunakan HTML statis, Bootstrap 5.3 dari CDN, Phosphor Icons dari CDN, CSS khusus, dan JavaScript native. **Tidak ada proses build, Node.js, npm, Vite, React, atau dependency frontend.**
+Situs publik pandaan.id sebagai **HTML statis murni**: HTML + Bootstrap 5.3 (CDN) + Phosphor Icons (CDN) + CSS khusus + JavaScript native.
+
+**Bukan Laravel.** Tidak ada PHP, Blade, backend, database, CMS, Node.js/npm, Vite, atau proses build. Setiap halaman adalah file `.html` biasa yang bisa dibuka langsung atau di-host di static hosting mana pun.
+
+## Struktur
+
+Struktur folder = struktur URL. Folder berisi `index.html` agar URL bersih bekerja di static hosting:
+
+```
+index.html                                → /
+berita/index.html                         → /berita/
+berita/akhir-pekan-di-kaki-arjuno/        → /berita/akhir-pekan-di-kaki-arjuno/
+info-jalan/index.html                     → /info-jalan/
+info-jalan/road-1/                        → /info-jalan/road-1/
+direktori/index.html                      → /direktori/
+direktori/kafe-and-nongkrong/kedai-sore/  → /direktori/kafe-and-nongkrong/kedai-sore/
+event/index.html                          → /event/
+event/pasar-kreatif-pandaan/              → /event/pasar-kreatif-pandaan/
+tentang/  kerja-sama/  kontribusi/        → /tentang/ /kerja-sama/ /kontribusi/
+404.html                                  halaman tidak ditemukan
+offline.html                              halaman offline (PWA)
+assets/css/pandaan.css                    gaya khusus
+assets/js/pandaan.js                      JavaScript native
+manifest.webmanifest, sw.js, icon-*       PWA
+robots.txt, sitemap.xml                   SEO
+scripts/preview.py                        server pratinjau lokal (Python 3)
+```
 
 ## Pratinjau lokal
 
-Prasyarat hanya Python 3 (tidak memasang paket):
+Hanya butuh Python 3, tanpa memasang paket apa pun:
 
 ```bash
 python3 scripts/preview.py
+# buka http://localhost:4173
 ```
 
-Buka `http://localhost:4173`. Server pratinjau memetakan URL bersih (`/berita`, `/info-jalan`, `/direktori`, `/event`) ke file HTML di `public/site/` dan mengirim halaman 404 dengan status HTTP 404 untuk rute yang tidak dikenal.
+Alternatif lain, dari root repo:
 
-## Integrasi ke Laravel 13
-
-Salin berkas dari proyek ini ke aplikasi Laravel:
-
-- `public/site/` → `public/site/`
-- `public/assets/` → `public/assets/`
-- `public/icon*`, `public/manifest.webmanifest`, `public/sw.js`, `public/offline.html`, `public/robots.txt`, dan `public/sitemap.xml` → direktori `public/` Laravel
-- `routes/pandaan-public.php` → `routes/pandaan-public.php` Laravel
-
-Lalu tambahkan baris berikut **paling akhir** pada `routes/web.php` Laravel:
-
-```php
-require __DIR__.'/pandaan-public.php';
+```bash
+python3 -m http.server 4173
+# atau
+npx serve .
 ```
 
-File route tersebut melayani halaman HTML statis melalui Laravel dan mempertahankan status 404 untuk URL yang tidak dikenal. Setelah model/CMS/backend disiapkan, ganti respons `response()->file(...)` dengan route controller dan Blade yang menggunakan data Laravel. Formulir saat ini hanya simulasi dan tidak mengirim atau menyimpan data.
+## Deploy
 
-Bootstrap dan Phosphor dimuat dari CDN—tidak perlu menjalankan `npm install`, `npm run build`, atau `npm run dev`. CSS dan JavaScript khusus sudah disediakan di `public/assets/`.
+Upload **seluruh isi root repo ini** (kecuali `.git/`, dokumen `*.md`, dan `scripts/`) ke static hosting apa pun — misalnya Netlify, Vercel, Cloudflare Pages, GitHub Pages, atau Nginx/Apache biasa:
+
+- Build command: *(kosong / tidak ada)*
+- Output / publish directory: `.` (root repo; di Netlify/Vercel cukup arahkan root-nya ke repo ini)
+- File `404.html` di root otomatis dipakai sebagai halaman 404 oleh mayoritas static host.
+
+Tidak ada variabel lingkungan, migrasi database, atau langkah build yang perlu dijalankan.
+
+## Menambah / mengubah halaman
+
+1. Buat folder baru + `index.html` di dalamnya untuk URL baru (mis. `promo/index.html` → `/promo/`).
+2. Salin struktur `<head>`, header, dan footer dari halaman yang sudah ada agar konsisten.
+3. Link antar halaman memakai path absolut dari root: `/berita/`, `/assets/css/pandaan.css`, dst.
+4. Formulir saat ini hanya **simulasi di browser** — tidak mengirim/menyimpan data. Jika nanti butuh pengiriman data, arahkan formulir ke layanan form pihak ketiga (mis. Formspree) atau API eksternal; tetap tidak perlu backend sendiri.
 
 ## Catatan konten dan SEO
 
-Seluruh isi berita, agenda, listing usaha, cuaca, dan kartu Info Jalan yang tersedia adalah **data contoh**. Setiap halaman pratinjau memakai `noindex`; detail sumber, kontak, alamat presisi, harga, waktu pengamatan, dan status verifikasi tidak dibuat-buat. Peta direktori hanya menampilkan area umum tanpa pin usaha.
+Seluruh isi berita, agenda, listing usaha, cuaca, dan kartu Info Jalan adalah **data contoh**. Setiap halaman memakai `noindex`; detail sumber, kontak, alamat presisi, harga, waktu pengamatan, dan status verifikasi tidak dibuat-buat. Peta direktori hanya menampilkan area umum tanpa pin usaha.
 
 Sebelum publikasi:
 
-1. Ganti fixture dengan data yang sudah ditinjau dan punya sumber/provenance.
-2. Hubungkan formulir ke endpoint Laravel, validasi server, CSRF, dan penyimpanan yang sesuai.
-3. Hapus `noindex` setelah konten siap dan buat sitemap dari data publik yang valid.
-4. Pastikan URL gambar Unsplash, CDN Bootstrap, CDN Phosphor, PWA, serta kebijakan cache sesuai lingkungan produksi.
+1. Ganti data contoh dengan data yang sudah ditinjau dan punya sumber.
+2. Hapus `noindex` setelah konten siap dan isi `sitemap.xml` dari URL publik yang valid.
+3. Pastikan URL gambar Unsplash, CDN Bootstrap, dan CDN Phosphor sesuai kebijakan produksi. Untuk CSP yang ketat, izinkan domain CDN tersebut atau self-host file-nya di `assets/`.
 
-Halaman Bootstrap ini tidak memerlukan pipeline aset. Untuk kebijakan CSP yang ketat, izinkan domain CDN yang dipakai atau self-host file Bootstrap/Phosphor di `public/`.
+Dokumen perencanaan (`PRD-pandaan-id-website-publik.md`, `pandaan-id-portal-proposal.md`) hanya referensi produk dan bukan bagian dari situs yang di-deploy.
