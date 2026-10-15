@@ -12,7 +12,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 import os
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 PORT = int(os.environ.get("PORT", "4173"))
 
 

@@ -25,7 +25,7 @@ assets/css/pandaan.css                    gaya khusus
 assets/js/pandaan.js                      JavaScript native
 manifest.webmanifest, sw.js, icon-*       PWA
 robots.txt, sitemap.xml                   SEO
-scripts/preview.py                        server pratinjau lokal (Python 3)
+docs/                                   dokumen internal & skrip (TIDAK ikut diterbitkan)
 ```
 
 ## Pratinjau lokal
@@ -33,7 +33,7 @@ scripts/preview.py                        server pratinjau lokal (Python 3)
 Hanya butuh Python 3, tanpa memasang paket apa pun:
 
 ```bash
-python3 scripts/preview.py
+python3 docs/scripts/preview.py
 # buka http://localhost:4173
 ```
 
@@ -80,7 +80,7 @@ Dokumen perencanaan (`PRD-pandaan-id-website-publik.md`, `pandaan-id-portal-prop
 
 ## GitHub Pages
 
-Repo ini siap GitHub Pages: file `CNAME` (`pandaan.id`) + `.nojekyll` sudah ada, dan **semua path internal relatif** (`./`, `../`) sehingga situs juga jalan di subpath `username.github.io/nama-repo/` bila CNAME dilepas. `404.html`, `robots.txt`, dan `sitemap.xml` (ditulis manual) ada di root. OG image absolut: `https://pandaan.id/assets/og-pandaan.jpg` (1200×630).
+Repo ini diterbitkan GitHub Pages dari branch, dan `_config.yml` mengecualikan `docs/` (PRD, proposal, skrip) serta `README.md` dari hasil terbit — dokumen internal tidak bisa diakses publik. (Workflow Actions khusus tidak dipakai; token integrasi sesi tidak memiliki izin `workflows`.) **Semua path internal relatif** (`./`, `../`) sehingga situs jalan di subpath `username.github.io/nama-repo/` maupun domain sendiri. File `CNAME` sudah dihapus dari repo: canonical/OG di HTML menunjuk domain produksi yang dituju, `https://pandaan.id/`. Bila domain produksi berubah, ganti string domain itu di semua `<link rel="canonical">`, `og:url`, dan `og:image`, lalu tambahkan kembali `CNAME` berisi domain baru. `404.html` dan `offline.html` mandiri (CSS inline, `noindex`) agar tetap benar di URL bertingkat. `sitemap.xml` ditulis manual dan selama pratinjau dikosongkan; saat rilis isi setiap `<url>` dengan `<loc>` + `<lastmod>` (tanggal pembaruan halaman itu). OG image absolut: `https://pandaan.id/assets/og-pandaan.jpg` (1200×630). Canonical dan `og:url` selalu memakai trailing slash (`/berita/`) agar konsisten dengan sitemap.
 
 Catatan: GitHub Pages melarang situs yang *terutama* untuk transaksi komersial. Landing/pitch aman; bila nanti ada iklan & listing berbayar, pindah ke Cloudflare Pages/Netlify (tinggal arahkan ke repo yang sama, tanpa build).
 

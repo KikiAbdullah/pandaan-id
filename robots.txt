@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 
-# Pratinjau berisi fixture; halaman HTML mengirim noindex, follow.
-Sitemap: https://pandaan.id/sitemap.xml
+# Selama pratinjau: semua halaman memakai noindex, follow dan berisi data contoh,
+# jadi sitemap sengaja dikosongkan. Saat rilis: lepas noindex, isi sitemap.xml
+# (setiap <url> wajib menyertakan <lastmod>), dan baris Sitemap di bawah diaktifkan.
+# Sitemap: https://pandaan.id/sitemap.xml

@@ -1,6 +1,6 @@
 // Service worker pandaan.id — path relatif terhadap scope registrasi,
 // jadi bekerja di root custom domain maupun subpath GitHub Pages.
-const CACHE_NAME = 'pandaan-static-v11'
+const CACHE_NAME = 'pandaan-static-v12'
 const scope = self.registration.scope
 const shellPaths = [
   './', 'berita/', 'info-jalan/', 'direktori/', 'event/', 'offline.html',
@@ -22,6 +22,8 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url)
   if (url.origin !== self.location.origin) return
   if (request.mode === 'navigate') {
+    // Network-first. Bila offline dan halaman tersimpan dipakai, sisipkan
+    // peringatan bahwa datanya mungkin lama (penting untuk Info Jalan).
     event.respondWith((async () => {
       try {
         const response = await fetch(request)
@@ -31,23 +33,30 @@ self.addEventListener('fetch', (event) => {
         }
         return response
       } catch {
-        return (await caches.match(request)) || (await caches.match(new URL('offline.html', scope).toString()))
+        const cached = await caches.match(request)
+        if (cached) {
+          const html = await cached.text()
+          const warning = '<div style="background:#fbf3df;color:#624d29;padding:.75rem 1rem;font:600 14px system-ui;text-align:center;border-bottom:1px solid #eee1bd">Anda sedang offline — halaman tersimpan ini mungkin berisi data lama. Periksa kembali setelah tersambung.</div>'
+          const headers = new Headers(cached.headers)
+          headers.set('Content-Type', 'text/html; charset=utf-8')
+          return new Response(html.replace(/(<body[^>]*>)/, '$1' + warning), { status: 200, headers })
+        }
+        return caches.match(new URL('offline.html', scope).toString())
       }
     })())
     return
   }
   if (url.pathname.includes('/assets/') || url.pathname.endsWith('manifest.webmanifest') || url.pathname.includes('/icon')) {
+    // Stale-while-revalidate: tampilkan cache seketika, segarkan di latar.
+    // Menghentikan riwayat CSS basi yang menempel di perangkat pengguna.
     event.respondWith((async () => {
-      const cached = await caches.match(request)
-      if (cached) return cached
-      try {
-        const response = await fetch(request)
-        if (response.ok) {
-          const cache = await caches.open(CACHE_NAME)
-          await cache.put(request, response.clone())
-        }
+      const cache = await caches.open(CACHE_NAME)
+      const cached = await cache.match(request)
+      const refresh = fetch(request).then((response) => {
+        if (response.ok) cache.put(request, response.clone())
         return response
-      } catch { return Response.error() }
+      }).catch(() => null)
+      return cached || (await refresh) || Response.error()
     })())
   }
 })

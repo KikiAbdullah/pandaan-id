@@ -1,0 +1,10 @@
+# GitHub Pages (mode branch): hanya situs yang diterbitkan.
+# Dokumen internal & skrip tidak ikut terbit. File HTML tanpa front matter
+# disalin apa adanya oleh Jekyll (tidak diproses Liquid).
+exclude:
+  - docs
+  - README.md
+  - _config.yml
+  - vendor
+  - Gemfile
+  - Gemfile.lock
