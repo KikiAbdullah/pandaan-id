@@ -5,6 +5,24 @@ Keluar dengan kode 1 bila ada halaman yang menyimpang."""
 import pathlib, re, sys
 root = pathlib.Path(__file__).resolve().parents[2]
 problems = []
+
+FOOTER_BAKU = None
+def footer_norm(text):
+    m = re.search(r'<footer class="site-footer">.*?</footer>', text, re.S)
+    if not m:
+        return ""
+    s = m.group(0)
+    s = re.sub(r'(?:\.\./|\./)+', "P/", s)
+    return s
+
+for _p in sorted(root.rglob("*.html")):
+    if ".git" in _p.parts:
+        continue
+    _n = footer_norm(_p.read_text())
+    if _n:
+        FOOTER_BAKU = _n
+        break
+
 for p in sorted(root.rglob("*.html")):
     if ".git" in p.parts or 'http-equiv="refresh"' in p.read_text():
         continue
@@ -24,6 +42,7 @@ for p in sorted(root.rglob("*.html")):
         ("urutan dock baku", [dock.find(">" + l + "<") for l in ["Beranda", "Berita", "Info Jalan", "Direktori", "Event"]] == sorted(dock.find(">" + l + "<") for l in ["Beranda", "Berita", "Info Jalan", "Direktori", "Event"])),
         ("footer legal", "footer-legal" in t and "kebijakan-privasi" in t and "pedoman-redaksi" in t and "syarat-ketentuan" in t),
         ("SRI phosphor", "integrity=\"sha384-" in t or "phosphor" not in t.lower()),
+        ("footer baku", footer_norm(t) == FOOTER_BAKU),
     ]:
         if not ok:
             problems.append(f"{rel}: {label}")
