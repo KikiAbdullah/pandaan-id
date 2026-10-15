@@ -1,0 +1,72 @@
+{
+  "updated": "2026-10-15T14:32:00+07:00",
+  "note": "Data contoh untuk pratinjau. Ganti berkas ini dengan data redaksi; status Aktif dihitung dari validUntil terhadap waktu pengunjung.",
+  "reports": [
+    {
+      "id": "exit-tol-pandaan",
+      "type": "Lalu lintas",
+      "title": "Arus padat merayap di Exit Tol Pandaan arah Malang",
+      "location": "Area Pintu Keluar Tol Pandaan",
+      "observedAt": "2026-10-15T14:32:00+07:00",
+      "validUntil": "2026-10-15T20:00:00+07:00",
+      "state": "aktif",
+      "note": "Data contoh. Kartu tampilan laporan; sumber dan status belum diverifikasi.",
+      "detailUrl": "exit-tol-pandaan/"
+    },
+    {
+      "id": "jalur-pandaan-prigen",
+      "type": "Kondisi jalan",
+      "title": "Jalur Pandaan–Prigen lancar, kabut tipis di tanjakan",
+      "location": "Area Pandaan menuju Prigen",
+      "observedAt": "2026-10-15T14:18:00+07:00",
+      "validUntil": "2026-10-15T19:00:00+07:00",
+      "state": "aktif",
+      "note": "Data contoh. Kartu tampilan laporan; sumber dan status belum diverifikasi.",
+      "detailUrl": "jalur-pandaan-prigen/"
+    },
+    {
+      "id": "simpang-taman-dayu",
+      "type": "Pekerjaan jalan",
+      "title": "Perbaikan drainase di Simpang Taman Dayu, satu lajur dibuka",
+      "location": "Area Simpang Taman Dayu",
+      "observedAt": "2026-10-15T14:03:00+07:00",
+      "validUntil": "2026-10-16T06:00:00+07:00",
+      "state": "aktif",
+      "note": "Data contoh. Kartu tampilan laporan; sumber dan status belum diverifikasi.",
+      "detailUrl": "simpang-taman-dayu/"
+    },
+    {
+      "id": "underpass-Kasri",
+      "type": "Kondisi jalan",
+      "title": "Genangan di underpass Kasri, kedalaman belum terukur",
+      "location": "Underpass Kasri, Jl. Kasri Raya",
+      "observedAt": "2026-10-15T13:40:00+07:00",
+      "validUntil": null,
+      "state": "perlu-dilengkapi",
+      "note": "Menunggu kelengkapan. Kiriman warga ini belum mencantumkan foto dan waktu pengamatan pasti; redaksi meminta keterangan tambahan ke pelapor sebelum diterbitkan sebagai laporan aktif.",
+      "detailUrl": null
+    },
+    {
+      "id": "Kasri-12okt",
+      "type": "Lalu lintas",
+      "title": "Penutupan sementara Jl. Kasri Raya untuk perbaikan gorong-gorong",
+      "location": "Jl. Kasri Raya",
+      "observedAt": "2026-10-12T09:00:00+07:00",
+      "validUntil": "2026-10-12T17:00:00+07:00",
+      "state": "selesai",
+      "note": "Data contoh. Laporan sudah berakhir; jalan dibuka kembali pada hari yang sama.",
+      "detailUrl": null
+    },
+    {
+      "id": "exit-tol-11okt",
+      "type": "Lalu lintas",
+      "title": "Antrean kendaraan di Exit Tol Pandaan saat akhir pekan",
+      "location": "Area Pintu Keluar Tol Pandaan",
+      "observedAt": "2026-10-11T16:20:00+07:00",
+      "validUntil": "2026-10-11T21:00:00+07:00",
+      "state": "selesai",
+      "note": "Data contoh. Laporan sudah berakhir; arus kembali normal malam harinya.",
+      "detailUrl": null
+    }
+  ]
+}

@@ -168,7 +168,7 @@
         event_time: 'Tanggal & jam acara', event_venue: 'Lokasi acara', event_organizer: 'Penyelenggara',
         details: 'Keterangan',
       }
-      const typeLabel = typeSelect?.selectedOptions?.[0]?.textContent || ''
+      const typeLabel = ({ report: 'Lapor kondisi jalan', business: 'Usulkan usaha lokal', event: 'Kirim info event' })[typeSelect?.value || 'report'] || ''
       const lines = [`Kontribusi pandaan.id — ${typeLabel}`]
       new FormData(contribForm).forEach((value, key) => {
         const text = String(value).trim()
@@ -219,6 +219,69 @@
     node.textContent = `${label} · ${clockFmt.format(then).replace(':', '.')} WIB`
     node.classList.add('font-mono')
   })
+
+  // Info Jalan data-driven: laporan dibaca dari assets/data/road-reports.json.
+  // Status "Aktif" tidak di-hardcode: laporan yang validUntil-nya terlewat
+  // otomatis pindah ke Riwayat, dan angka tab dihitung dari data. Dievaluasi
+  // ulang tiap menit selama halaman terbuka.
+  const roadLists = all('[data-road-list]')
+  if (roadLists.length) {
+    const scriptSrc = document.querySelector('script[src*="pandaan.js"]')?.src || ''
+    const siteBase = scriptSrc.includes('/assets/js/') ? scriptSrc.split('/assets/js/')[0] + '/' : new URL('./', window.location.href).href
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
+    const fmtWhen = (iso) => {
+      const d = new Date(iso)
+      if (Number.isNaN(d.getTime())) return ''
+      const diffMin = Math.round((d.getTime() - Date.now()) / 60000)
+      const rel = Math.abs(diffMin) < 60 ? relFmt.format(diffMin, 'minute') : relFmt.format(Math.round(diffMin / 60), 'hour')
+      return `${rel} · ${clockFmt.format(d).replace(':', '.')} WIB`
+    }
+    const fmtFull = (iso) => new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(iso)).replace(' pukul ', ' · ').replace(':', '.') + ' WIB'
+    const bucketOf = (r, now) => {
+      if (r.state === 'perlu-dilengkapi') return 'incomplete'
+      const expired = r.validUntil && now > new Date(r.validUntil)
+      if (r.state === 'selesai' || expired) {
+        return now - new Date(r.observedAt) <= 7 * 24 * 3600 * 1000 ? 'history' : 'archived'
+      }
+      return 'active'
+    }
+    const badgeFor = { active: ['text-bg-success', 'Aktif'], incomplete: ['text-bg-warning', 'Perlu dilengkapi'], history: ['text-bg-secondary', 'Selesai'] }
+    const cardHtml = (r, bucket) => {
+      const [cls, label] = badgeFor[bucket] || badgeFor.history
+      const valid = r.validUntil ? `<span><i class="ph ph-hourglass me-1"></i>Berlaku s.d. <time datetime="${esc(r.validUntil)}">${esc(fmtWhen(r.validUntil))}</time></span>` : ''
+      const link = bucket === 'incomplete'
+        ? '<a class="text-link mt-3" href="../kontribusi">Bantu lengkapi laporan <i class="ph ph-arrow-right"></i></a>'
+        : (r.detailUrl ? `<a class="text-link mt-3" href="../info-jalan/${esc(r.detailUrl)}">Lihat detail laporan <i class="ph ph-arrow-right"></i></a>` : '')
+      return `<div class="col-lg-4"><article class="road-report-card"><div class="d-flex justify-content-between gap-2"><span class="eyebrow">${esc(r.type)}</span><span class="badge ${cls}">${label}</span></div><h3>${esc(r.title)}</h3><div class="road-report-meta"><span><i class="ph ph-map-pin me-1"></i>${esc(r.location)}</span><span><i class="ph ph-clock me-1"></i><time datetime="${esc(r.observedAt)}">${esc(fmtWhen(r.observedAt))}</time></span>${valid}</div><div class="road-report-note">${esc(r.note)}</div>${link}</article></div>`
+    }
+    let roadData = []
+    const renderRoad = () => {
+      const now = new Date()
+      const buckets = { active: [], incomplete: [], history: [] }
+      roadData.forEach((r) => { const b = bucketOf(r, now); if (buckets[b]) buckets[b].push(r) })
+      const groups = { active: buckets.active, all: [...buckets.active, ...buckets.incomplete, ...buckets.history], incomplete: buckets.incomplete, history: buckets.history }
+      Object.entries(groups).forEach(([key, items]) => {
+        const list = document.querySelector(`[data-road-list="${key}"]`)
+        const empty = document.querySelector(`[data-road-empty="${key}"]`)
+        if (list) list.innerHTML = items.map((r) => cardHtml(r, key === 'all' ? bucketOf(r, now) : key)).join('')
+        empty?.classList.toggle('d-none', items.length > 0)
+        const badge = document.querySelector(`[data-road-count="${key}"]`)
+        if (badge) badge.textContent = String(items.length)
+      })
+      const summary = document.querySelector('[data-road-summary]')
+      if (summary) summary.textContent = `${buckets.active.length} laporan aktif ditampilkan dari data terstruktur; laporan kedaluwarsa otomatis pindah ke riwayat.`
+      const updated = document.querySelector('[data-road-updated]')
+      const latest = roadData.map((r) => r.observedAt).filter(Boolean).sort().pop()
+      if (updated && latest) updated.textContent = `Diperbarui ${fmtFull(latest)}.`
+    }
+    fetch(siteBase + 'assets/data/road-reports.json', { cache: 'no-cache' })
+      .then((res) => { if (!res.ok) throw new Error(res.status); return res.json() })
+      .then((data) => { roadData = Array.isArray(data?.reports) ? data.reports : []; renderRoad(); window.setInterval(renderRoad, 60000) })
+      .catch(() => {
+        const summary = document.querySelector('[data-road-summary]')
+        if (summary) summary.textContent = 'Data laporan gagal dimuat. Periksa koneksi lalu muat ulang halaman.'
+      })
+  }
 
   // Form: abaikan diam-diam bila honeypot terisi (bot). Form kontribusi:
   // cek yang sama berlaku sebelum kiriman diteruskan ke redaksi.

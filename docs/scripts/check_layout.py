@@ -18,6 +18,7 @@ for p in sorted(root.rglob("*.html")):
         ("menu Kerja Sama masih di navbar", "kerja-sama" not in nav),
         ("tombol Cari usaha", "Cari usaha" in nav),
         ("tombol Kontribusi", "Kontribusi" in nav),
+        ("lockup horizontal (mark + wordmark)", "brand-word" in nav),
         ("modal pencarian", t.count('id="searchModal"') == 1),
         ("dock tepat 5 item", t.count("dock-item") == 5),
         ("dock tanpa Cari/Kontribusi", ">Cari<" not in dock and "Kontribusi" not in dock),

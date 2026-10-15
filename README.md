@@ -115,3 +115,15 @@ python3 docs/scripts/check_layout.py
 ```
 
 Skrip itu gagal (exit 1) bila ada halaman yang navbar/dock/modal/footer-nya menyimpang dari pola baku.
+
+## Data Info Jalan (data-driven)
+
+Daftar laporan di `info-jalan/` tidak di-hardcode di HTML. Laporan dibaca dari
+`assets/data/road-reports.json` (bidang: type, title, location, observedAt,
+validUntil, state, note, detailUrl) dan dirender oleh `assets/js/pandaan.js`.
+
+- Status **Aktif** dihitung dari `validUntil` terhadap waktu pengunjung; laporan
+  yang lewat masa berlakunya otomatis pindah ke Riwayat 7 hari. Evaluasi diulang
+  tiap menit selama halaman terbuka, dan angka pada tab selalu dihitung dari data.
+- Bila nanti ada backend/CMS, cukup hasilkan berkas JSON yang sama — tampilan
+  tidak perlu diubah.
