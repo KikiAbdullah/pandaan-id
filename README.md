@@ -97,7 +97,7 @@ Prinsip: sesedikit mungkin, versi terkunci, tidak ada `@latest`.
 ## Arsitektur informasi
 
 - Navbar desktop: Beranda, Berita, Info Jalan, Direktori, Event + tombol **Cari usaha** (memang hanya mencari direktori — labelnya dibuat jujur) dan **Kontribusi**. Kerja Sama (urusan B2B/iklan) tidak lagi di navbar; tautannya ada di footer bersama Kebijakan Privasi dan Pedoman Redaksi.
-- Dock mobile memuat 7 item yang bisa digeser: Beranda, Berita, Cari, Direktori, Event, Info Jalan, Kontribusi.
+- Dock mobile memuat tepat 5 item yang muat penuh di lebar 360–375px tanpa digeser: Beranda, Berita, Info Jalan, Direktori, Event. Cari dan Kontribusi tetap tersedia di header/menu hamburger.
 - Berita punya halaman **Arsip** (`berita/arsip/`) dan **kategori** (`berita/kategori/panduan|komunitas|kuliner/`). Dengan 6 artikel, paginasi belum diperlukan; tambahkan saat arsip melewati ±24 artikel.
 
 ## Kepatuhan & analytics

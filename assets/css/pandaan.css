@@ -14,7 +14,8 @@
   --shadow-soft: 0 18px 48px rgba(22, 53, 42, .09);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body { overflow-x: clip; }
 body {
   min-width: 320px;
   padding-bottom: 0;
@@ -191,7 +192,7 @@ button, input, select { font: inherit; }
   body { padding-bottom: 68px; }
 }
 @media (max-width: 575.98px) {
-  .container-xl { --bs-gutter-x: 1.25rem; }
+  .container-xl { --bs-gutter-x: 1.5rem; }
   .top-strip .top-inner { min-height: 30px; font-size: .75rem; }
   .top-strip .top-social { display: none; }
   .brand-mark { width: 38px; height: 38px; border-radius: 13px 13px 13px 4px; }
@@ -223,6 +224,7 @@ button, input, select { font: inherit; }
 
 /* Readability + visual audit: consistent type scale, stronger contrast, and clearer focus. */
 :root {
+  --bs-secondary-color: #53645a;
   --muted-strong: #53645a;
   --coral-dark: #9e4b31;
   --surface: #fff;
@@ -230,6 +232,7 @@ button, input, select { font: inherit; }
   --focus-ring: 0 0 0 .22rem rgba(23, 63, 53, .2);
 }
 
+.text-secondary { color: #53645a !important; }
 html { scroll-padding-top: 6rem; }
 body { color: var(--ink); background: var(--paper); font-size: 1rem; }
 ::selection { color: #fff; background: var(--pine); }
@@ -409,6 +412,8 @@ body { color: var(--ink); background: var(--paper); font-size: 1rem; }
 .road-card h3 { min-height: 3.1em; margin: .75rem 0 .75rem; font-size: 1.125rem; font-weight: 780; line-height: 1.35; }
 .road-card p { color: #e0e9e2; font-size: .875rem; }
 .road-card .road-state { padding: .4rem .75rem; color: #f8e8c2; font-size: .75rem; }
+.road-card .text-link { color: #f3d393; }
+.road-card .text-link:hover { color: #fff; }
 .road-empty { border-radius: 1rem; line-height: 1.55; }
 
 .category-card { min-height: 96px; padding: 1rem; border-color: #e3e9e3; border-radius: 1.1rem; box-shadow: 0 5px 17px rgba(20, 48, 37, .025); }
@@ -523,7 +528,7 @@ body { color: var(--ink); background: var(--paper); font-size: 1rem; }
   body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
 }
 @media (max-width: 575.98px) {
-  .container-xl { --bs-gutter-x: 1.25rem; }
+  .container-xl { --bs-gutter-x: 1.5rem; }
   .top-strip .top-inner { min-height: 32px; font-size: .75rem; }
   .top-strip .top-social { display: none; }
   .brand-mark { width: 40px; height: 40px; border-radius: 14px 14px 14px 5px; }
@@ -696,10 +701,11 @@ h1, h2, h3, .page-title, .section-heading h2, .hero-copy h1, .cta-band h2,
 .article-wrap { max-width: 900px; }
 .hp-field { position: absolute; left: -9999px; }
 .road-disclaimer--light { background: #f7f4ea; color: #6c5731; border: 1px solid #eee5ce; }
+.road-disclaimer--light strong { color: #55451f; }
+.road-disclaimer--light i { color: #8a672c; }
 .road-empty--dark { background: var(--pine); color: #e1ebe3; }
 .footer-legal { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.14); }
-.dock-scroll { display: flex; overflow-x: auto; scrollbar-width: none; }
-.dock-scroll::-webkit-scrollbar { display: none; }
-.mobile-dock .dock-item { display: flex; flex: 1 0 4.2rem; flex-direction: column; align-items: center; justify-content: center; gap: .12rem; min-height: 60px; border: 0; background: none; color: #53645a; font-size: .72rem; font-weight: 750; text-decoration: none; }
+.dock-scroll { display: flex; }
+.mobile-dock .dock-item { display: flex; flex: 1 1 0; min-width: 0; flex-direction: column; align-items: center; justify-content: center; gap: .12rem; min-height: 60px; border: 0; background: none; color: #53645a; font-size: .72rem; font-weight: 750; text-decoration: none; white-space: nowrap; }
 .mobile-dock .dock-item i { font-size: 1.25rem; }
 .mobile-dock .dock-item.active { color: var(--pine); }

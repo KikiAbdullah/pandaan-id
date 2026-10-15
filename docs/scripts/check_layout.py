@@ -13,13 +13,15 @@ for p in sorted(root.rglob("*.html")):
         continue
     rel = p.relative_to(root)
     nav = t[t.find("site-navbar"):t.find("</header>")]
+    dock = t[t.find("mobile-dock"):t.find("</nav>", t.find("mobile-dock"))]
     for label, ok in [
         ("menu Kerja Sama masih di navbar", "kerja-sama" not in nav),
         ("tombol Cari usaha", "Cari usaha" in nav),
         ("tombol Kontribusi", "Kontribusi" in nav),
         ("modal pencarian", t.count('id="searchModal"') == 1),
-        ("dock 7 item", t.count("dock-item") >= 7),
-        ("dock Info Jalan", ">Info Jalan<" in t),
+        ("dock tepat 5 item", t.count("dock-item") == 5),
+        ("dock tanpa Cari/Kontribusi", ">Cari<" not in dock and "Kontribusi" not in dock),
+        ("urutan dock baku", [dock.find(">" + l + "<") for l in ["Beranda", "Berita", "Info Jalan", "Direktori", "Event"]] == sorted(dock.find(">" + l + "<") for l in ["Beranda", "Berita", "Info Jalan", "Direktori", "Event"])),
         ("footer legal", "footer-legal" in t and "kebijakan-privasi" in t and "pedoman-redaksi" in t),
         ("SRI phosphor", "integrity=\"sha384-" in t or "phosphor" not in t.lower()),
     ]:
