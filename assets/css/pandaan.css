@@ -710,13 +710,6 @@ h1, h2, h3, .page-title, .section-heading h2, .hero-copy h1, .cta-band h2,
 .mobile-dock .dock-item i { font-size: 1.25rem; }
 .mobile-dock .dock-item.active { color: var(--pine); }
 
-/* Lockup horizontal: mark logo + wordmark teks terbaca (B-7) */
-.brand-word { font-family: var(--font-head); font-size: 1.5rem; font-weight: 650; line-height: 1; letter-spacing: -.02em; color: var(--pine); white-space: nowrap; }
-.brand-word .brand-tld { color: var(--coral); }
-.site-footer .brand-word { color: #fff; }
-.site-footer .brand-word .brand-tld { color: #f0c979; }
-@media (max-width: 575.98px) { .brand-word { font-size: 1.28rem; } }
-
 /* Target sentuh >= 24px (WCAG 2.2) untuk tautan kecil (B-5) */
 .breadcrumb-item a { display: inline-block; padding-block: .45rem; }
 .text-link { padding-block: .4rem; }
